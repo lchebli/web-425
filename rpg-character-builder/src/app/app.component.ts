@@ -1,36 +1,51 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   template: `
     <div class="app-wrapper">
       <header class="app-header">
         <h1>Character Builder</h1>
       </header>
 
+    <div class="sign-in-container">
+      <a routerLink="/signin" class="sign-in-link">Sign In</a>
+    </div>
+
+    <main class="app-main">
       <nav class="app-nav">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Main</a></li>
-          <li><a href="#">Features</a></li>
-          <li><a href="#">Favorites</a></li>
+          <li><a routerLink="/">Home</a></li>
+          <li><a routerLink="/players">Players</a></li>
+          <li><a routerLink="/signin">Sign-In</a></li>
+          <li><a routerLink="/create-character">Create Character</a></li>
+          <li><a routerLink="/create-guild">Create Guild</a></li>
+          <li><a routerLink="/character-faction">Character Faction</a></li>
         </ul>
       </nav>
 
-      <main class="app-main">
+      <section class="app-content">
         <router-outlet></router-outlet>
-      </main>
+      </section>
+    </main>
 
       <footer class="app-footer">
         <nav class="footer-nav">
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Main</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Favorites</a></li>
+            <li><a routerLink="/">Home</a></li>
+            <li>|</li>
+            <li><a routerLink="/players">Players</a></li>
+            <li>|</li>
+            <li><a routerLink="/signin">Sign-In</a></li>
+            <li>|</li>
+            <li><a routerLink="/create-character">Create Character</a></li>
+            <li>|</li>
+            <li><a routerLink="/create-guild">Create Guild</a></li>
+            <li>|</li>
+            <li><a routerLink="/character-faction">Character Faction</a></li>
           </ul>
         </nav>
         <p>&copy; 2025 Character Builder</p>
