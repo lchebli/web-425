@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@400;700&family=MedievalSharp&display=swap');
+
+/* Minimal global reset / body styles used by components */
+body {
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	background-color: #f4f1ee;
+	color: #2c2c2c;
+}
