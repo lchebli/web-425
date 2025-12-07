@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CharacterListComponent } from '../character-list/character-list.component';
 
 interface Character {
   id: number;
@@ -13,7 +14,7 @@ interface Character {
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, FormsModule],
+  imports: [CommonModule, NgFor, NgIf, FormsModule, CharacterListComponent],
   template: `
     <div class="create-character-container">
       <h1>Create Character</h1>
@@ -76,7 +77,7 @@ interface Character {
       </div>
 
       <!-- Characters Display Section -->
-      <div class="display-section" *ngIf="characters.length > 0">
+      <div class="display-section">
         <h2>Created Characters ({{ characters.length }})</h2>
 
         <div class="characters-cards">
@@ -93,10 +94,7 @@ interface Character {
         </div>
       </div>
 
-      <!-- No Characters Message -->
-      <div class="no-characters" *ngIf="characters.length === 0">
-        <p>No characters created yet. Fill out the form above to create your first character!</p>
-      </div>
+        <app-character-list [characters]="characters" (remove)="onDeleteCharacter($event)"></app-character-list>
     </div>
   `,
   styles: [`
@@ -341,6 +339,7 @@ interface Character {
   `]
 })
 export class CreateCharacterComponent {
+  @Output() created = new EventEmitter<any>();
   characters: { id: number; name: string; gender: string; class: string }[] = [];
   private nextId = 1;
 
@@ -370,6 +369,8 @@ onCreateCharacter(): number {
   };
 
   this.characters.push(newCharacter);
+  // emit created character for parent/consumers
+  this.created.emit(newCharacter);
   return randomId;
 }
 

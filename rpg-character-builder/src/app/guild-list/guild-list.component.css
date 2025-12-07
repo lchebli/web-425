@@ -1,0 +1,6 @@
+.guild-list { padding: 8px; }
+.guild-row { display:flex; gap:12px; padding:8px 0; border-bottom:1px solid #efefef; align-items:center; }
+.guild-info { font-weight:600; }
+.guild-type { color:#666; font-size:0.9rem; }
+.btn-remove { margin-left:auto; background:#666; color:#fff; border:none; padding:6px 8px; cursor:pointer; }
+.empty-message { color:#777; font-style: italic; }

@@ -1,0 +1,13 @@
+<div class="character-list">
+  <ng-container *ngIf="characters && characters.length; else emptyTpl">
+    <div *ngFor="let c of characters" class="character-item">
+      <div class="character-name">{{ c.name }}</div>
+      <div class="character-meta">{{ c.class }} • {{ c.gender }}</div>
+      <button class="btn-delete" (click)="onRemove(c.id)">Delete</button>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyTpl>
+    <p class="empty-message">No characters available</p>
+  </ng-template>
+</div>

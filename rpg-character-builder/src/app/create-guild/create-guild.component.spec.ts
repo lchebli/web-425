@@ -46,4 +46,25 @@ it('should mark form valid and allow submission with correct data', () => {
   component.onSubmit();
   expect(component.onSubmit).toHaveBeenCalled();
 });
+
+  it('should emit created event on successful submit', () => {
+    // Expect a 'created' EventEmitter to be present and called when a guild is made (TDD)
+    spyOn((component as any).created, 'emit');
+
+    component.guildForm.controls['guildName'].setValue('New Guild');
+    component.guildForm.controls['description'].setValue('Desc');
+    component.guildForm.controls['type'].setValue('Casual');
+    component.guildForm.controls['notificationPreference'].setValue('Email');
+    component.guildForm.controls['acceptTerms'].setValue(true);
+
+    component.onSubmit();
+    expect((component as any).created.emit).toHaveBeenCalled();
+  });
+
+  it('template should include the app-guild-list child component', () => {
+    fixture.detectChanges();
+    // TDD expect: template must render the child <app-guild-list>
+    const el = fixture.debugElement.nativeElement.querySelector('app-guild-list');
+    expect(el).toBeTruthy();
+  });
 });

@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateCharacterComponent } from './create-character.component';
+import { CommonModule } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 describe('CreateCharacterComponent', () => {
   let component: CreateCharacterComponent;
@@ -7,7 +9,7 @@ describe('CreateCharacterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateCharacterComponent]
+      imports: [CreateCharacterComponent, CommonModule]
     })
     .compileComponents();
 
@@ -56,6 +58,26 @@ describe('CreateCharacterComponent', () => {
     expect(component.formData.name).toBe('');
     expect(component.formData.gender).toBe('');
     expect(component.formData.class).toBe('');
+  });
+
+  it('should created event when creating a character', () => {
+    // Expect CreateCharacter to create EventEmitter when a character is created
+    spyOn((component as any).created, 'emit');
+
+    component.formData.name = 'Emittable';
+    component.formData.gender = 'Other';
+    component.formData.class = 'Rogue';
+
+    component.onCreateCharacter();
+
+    expect((component as any).created.emit).toHaveBeenCalled();
+  });
+
+  it('should use the app-character-list child component', () => {
+    // Template should include the child component
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('app-character-list'));
+    expect(el).toBeTruthy();
   });
 
 

@@ -1,0 +1,12 @@
+<div class="guild-list">
+  <ng-container *ngIf="guilds && guilds.length; else emptyTpl">
+    <div *ngFor="let g of guilds" class="guild-row">
+      <div class="guild-info">{{ g.name }} <span class="guild-type">({{ g.type }})</span></div>
+      <button class="btn-remove" (click)="onRemove(g.id)">Remove</button>
+    </div>
+  </ng-container>
+
+  <ng-template #emptyTpl>
+    <p class="empty-message">No guilds yet</p>
+  </ng-template>
+</div>

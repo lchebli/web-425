@@ -1,20 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {ReactiveFormsModule } from '@angular/forms';
+import { GuildListComponent } from '../guild-list/guild-list.component';
+import { Guild } from '../models/guild.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import {FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
-interface Guild {
-  guildName: string;
-  description: string;
-  type: string;
-  notificationPreference: string;
-}
+// use shared Guild model from src/app/models/guild.model.ts
 
 @Component({
   selector: 'app-create-guild',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, ReactiveFormsModule],
+  imports: [CommonModule, NgFor, NgIf, ReactiveFormsModule, GuildListComponent],
   template: `
   <div class="form-container">
   <h2>Create a New Guild</h2>
@@ -72,26 +69,8 @@ interface Guild {
 </div>
 
 <!-- Guilds Display Section -->
-<div class="guilds-section" *ngIf="guilds.length > 0">
-  <h2>Created Guilds</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Guild Name</th>
-        <th>Description</th>
-        <th>Type</th>
-        <th>Notification Preference</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let guild of guilds">
-        <td>{{ guild.guildName }}</td>
-        <td>{{ guild.description }}</td>
-        <td>{{ guild.type }}</td>
-        <td>{{ guild.notificationPreference }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="guilds-section">
+  <app-guild-list [guilds]="guilds" (remove)="onRemoveGuild($event)"></app-guild-list>
 </div>
 
   `,
@@ -159,6 +138,7 @@ button:disabled {
 `
 })
 export class CreateGuildComponent {
+  @Output() created = new EventEmitter<any>();
   guildForm: FormGroup;
   guilds: Guild[] = [];
 
@@ -178,15 +158,24 @@ export class CreateGuildComponent {
       return;
     }
 
-    const newGuild: Guild = {
-      guildName: this.guildForm.value.guildName,
+    const id = Math.floor(Math.random() * 1000) + 1;
+
+    const newGuild: any = {
+      id,
+      name: this.guildForm.value.guildName,
       description: this.guildForm.value.description,
       type: this.guildForm.value.type,
       notificationPreference: this.guildForm.value.notificationPreference
     };
 
     this.guilds.push(newGuild);
+    // Emit created guild for parent/consumers
+    this.created.emit(newGuild);
     this.guildForm.reset();
+  }
+
+  onRemoveGuild(id: number) {
+    this.guilds = this.guilds.filter(g => (g as any).id !== id);
   }
 }
 

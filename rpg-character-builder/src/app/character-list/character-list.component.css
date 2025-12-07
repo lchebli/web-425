@@ -1,0 +1,6 @@
+.character-list { padding: 8px; }
+.character-item { border-bottom: 1px solid #eee; padding: 8px 0; display:flex; align-items:center; gap:12px; }
+.character-name { font-weight:600; }
+.character-meta { color: #666; font-size: 0.85rem; }
+.btn-delete { margin-left: auto; background:#c62828; color:#fff; border:none; padding:6px 8px; cursor:pointer; }
+.empty-message { color: #777; font-style: italic; }
