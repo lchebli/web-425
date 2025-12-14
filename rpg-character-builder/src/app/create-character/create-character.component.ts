@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CharacterListComponent } from '../character-list/character-list.component';
@@ -78,23 +78,9 @@ interface Character {
 
       <!-- Characters Display Section -->
       <div class="display-section">
-        <h2>Created Characters ({{ characters.length }})</h2>
-
-        <div class="characters-cards">
-          <div *ngFor="let character of characters" class="character-card">
-            <div class="card-header">
-              <h3>{{ character.name }}</h3>
-              <button (click)="onDeleteCharacter(character.id)" class="btn-delete" title="Delete character">×</button>
-            </div>
-            <div class="card-body">
-              <p><strong>Gender:</strong> {{ character.gender }}</p>
-              <p><strong>Class:</strong> <span class="class-badge" [ngClass]="'class-' + character.class.toLowerCase()">{{ character.class }}</span></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+        <h2>Created Characters</h2>
         <app-character-list [characters]="characters" (remove)="onDeleteCharacter($event)"></app-character-list>
+      </div>
     </div>
   `,
   styles: [`
@@ -339,7 +325,6 @@ interface Character {
   `]
 })
 export class CreateCharacterComponent {
-  @Output() created = new EventEmitter<any>();
   characters: { id: number; name: string; gender: string; class: string }[] = [];
   private nextId = 1;
 
@@ -370,7 +355,6 @@ onCreateCharacter(): number {
 
   this.characters.push(newCharacter);
   // emit created character for parent/consumers
-  this.created.emit(newCharacter);
   return randomId;
 }
 

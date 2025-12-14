@@ -60,19 +60,6 @@ describe('CreateCharacterComponent', () => {
     expect(component.formData.class).toBe('');
   });
 
-  it('should created event when creating a character', () => {
-    // Expect CreateCharacter to create EventEmitter when a character is created
-    spyOn((component as any).created, 'emit');
-
-    component.formData.name = 'Emittable';
-    component.formData.gender = 'Other';
-    component.formData.class = 'Rogue';
-
-    component.onCreateCharacter();
-
-    expect((component as any).created.emit).toHaveBeenCalled();
-  });
-
   it('should use the app-character-list child component', () => {
     // Template should include the child component
     fixture.detectChanges();

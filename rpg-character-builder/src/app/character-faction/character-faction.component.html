@@ -1,0 +1,15 @@
+<div class="character-faction-container">
+  <h1>Character Factions</h1>
+  <p>Explore the available character factions in our RPG world.</p>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div id="characterFactions" class="factions-grid" *ngIf="factions.length > 0">
+    <div *ngFor="let faction of factions" class="faction-card">
+      <h3>{{ faction.name }}</h3>
+      <p>{{ faction.description }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!errorMessage && factions.length === 0" class="loading">Loading factions...</div>
+</div>
